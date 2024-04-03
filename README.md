@@ -21,7 +21,7 @@ USAGE:
 COMMANDS:
    auto         auto
    env, e       Collect information
-   checksec, c  check security inside a container
+   checksec, c  check security inside a application
    exploit, x   run a exploit
    vul, v       list vulnerabilities
    version      Show the sploit version information
@@ -66,7 +66,7 @@ CVE-2099-9999 exists when 2 | second .
 ```
 ❯ ./bin/release/appsploit_linux_amd64 checksec       
 NAME:
-   appsploit checksec - check security inside a container
+   appsploit checksec - check security inside a application
 
 USAGE:
    appsploit checksec command [command options] [arguments...]

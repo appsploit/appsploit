@@ -8,11 +8,11 @@ import (
 type Result map[string]printer.Interface
 
 func Auto() {
-	s := Second()
-	m := Minute()
 	result := Result{
-		"second": s,
-		"minute": m,
+		"WebServer": WebServer(),
+		"Framework": Framework(),
+		"OS":        OS(),
+		"Component": Component(),
 	}
 	fmt.Println(printer.Printer.Print(result))
 }

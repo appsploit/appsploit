@@ -1,9 +1,9 @@
 package vul
 
 import (
+	"appsploit/vul"
 	"github.com/ctrsploit/sploit-spec/pkg/app"
 	"github.com/urfave/cli/v2"
-	"xsploit/vul"
 )
 
 var Command = &cli.Command{
