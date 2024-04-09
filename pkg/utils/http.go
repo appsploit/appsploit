@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"appsploit/pkg/dto/finderprint/cache"
+	"appsploit/pkg/dto/fingerprint/cache"
 	"crypto/tls"
 	"fmt"
 	"github.com/go-resty/resty/v2"
@@ -70,7 +70,7 @@ func (u *utilsHttp) FormatURLPath(baseURL string, path string) (string, error) {
 	return joinedURL.String(), error(nil)
 }
 
-func (u *utilsHttp) Request2RespCache(url string) (cache.RespCache, error) {
+func (u *utilsHttp) Req2RespCache(url string) (cache.RespCache, error) {
 	respCache := cache.RespCache{}
 	httpClient := *Http.Client()
 	resp, err := httpClient.Get(url)

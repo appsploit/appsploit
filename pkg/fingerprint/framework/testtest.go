@@ -1,15 +1,14 @@
 package framework
 
 import (
-	"appsploit/pkg/dto/finderprint/framework"
+	"appsploit/pkg/dto/fingerprint/framework"
 	"appsploit/pkg/dto/hash"
 )
 
-var testtest = framework.Finderprint{
+var testtest = framework.Fingerprint{
 	Basic: framework.MatchData{
 		Name: "Test Framework",
 		HeaderRegexpMatch: []framework.RegexpMatch{
-			//{Path: "/", Regexp: "BWS"},
 			{Path: "/", Regexp: "BWS"},
 		},
 		BodyRegexpMatch: []framework.RegexpMatch{
@@ -17,7 +16,6 @@ var testtest = framework.Finderprint{
 		},
 		BodyHash: []framework.HashMatch{
 			{Path: "/favicon.ico", Type: hash.MD5, Value: "0488faca4c19046b94d07c3ee83cf9d6"},
-			{Path: "/favicon.ico", Type: hash.SHA256, Value: "0488faca4c19046b94d07c3ee83cf9d6"},
 			{Path: "/test", Type: hash.SHA1, Value: "0488faca4c19046b94d07c3ee83cf9d6"},
 		},
 	},

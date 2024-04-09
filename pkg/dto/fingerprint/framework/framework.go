@@ -1,8 +1,8 @@
 package framework
 
-import "appsploit/pkg/dto/finderprint/cache"
+import "appsploit/pkg/dto/fingerprint/cache"
 
-type Finderprint struct {
+type Fingerprint struct {
 	Basic   MatchData
 	Version []MatchData
 }

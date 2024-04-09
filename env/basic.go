@@ -2,10 +2,10 @@ package env
 
 import (
 	"appsploit/pkg/dto/env"
-	"appsploit/pkg/dto/finderprint/cache"
-	"appsploit/pkg/dto/finderprint/datamatch"
-	dtoFramework "appsploit/pkg/dto/finderprint/framework"
-	"appsploit/pkg/finderprint/framework"
+	"appsploit/pkg/dto/fingerprint/cache"
+	"appsploit/pkg/dto/fingerprint/datamatch"
+	dtoFramework "appsploit/pkg/dto/fingerprint/framework"
+	"appsploit/pkg/fingerprint/framework"
 	"appsploit/pkg/utils"
 	"github.com/ctrsploit/sploit-spec/pkg/printer"
 	"github.com/ssst0n3/awesome_libs/log"
@@ -66,26 +66,6 @@ func Framework(ctx *cli.Context) (result printer.Interface) {
 	return frameworkInfo
 }
 
-func getRespCache(respCacheMap map[string]cache.RespCache, baseURL string, path string) (map[string]cache.RespCache, cache.RespCache) {
-	errorData := error(nil)
-	respCache := cache.RespCache{}
-	if cacheData, ok := respCacheMap[path]; ok {
-		respCache = cacheData
-	} else {
-		reqURL, err := utils.Http.FormatURLPath(baseURL, path)
-		if err != nil {
-			log.Logger.Debugf("url error: %s\n", err)
-		} else {
-			if respCache, errorData = utils.Http.Request2RespCache(reqURL); errorData != nil {
-				log.Logger.Debugf("request error: %s\n", errorData)
-			} else {
-				respCacheMap[path] = respCache
-			}
-		}
-	}
-	return respCacheMap, respCache
-}
-
 func dataMatch(matchArgs map[string]interface{}, matchData dtoFramework.MatchData) (map[string]interface{}, string) {
 	result := "unknown"
 	matchArgs["matchResult"] = matchData.Name
@@ -125,6 +105,26 @@ func dataMatch(matchArgs map[string]interface{}, matchData dtoFramework.MatchDat
 	matchArgs["regexpMatchList"] = []dtoFramework.RegexpMatch{}
 	matchArgs["hashMatchList"] = []dtoFramework.HashMatch{}
 	return matchArgs, result
+}
+
+func getRespCache(respCacheMap map[string]cache.RespCache, baseURL string, path string) (map[string]cache.RespCache, cache.RespCache) {
+	errorData := error(nil)
+	respCache := cache.RespCache{}
+	if cacheData, ok := respCacheMap[path]; ok {
+		respCache = cacheData
+	} else {
+		reqURL, err := utils.Http.FormatURLPath(baseURL, path)
+		if err != nil {
+			log.Logger.Debugf("url error: %s\n", err)
+		} else {
+			if respCache, errorData = utils.Http.Req2RespCache(reqURL); errorData != nil {
+				log.Logger.Debugf("request error: %s\n", errorData)
+			} else {
+				respCacheMap[path] = respCache
+			}
+		}
+	}
+	return respCacheMap, respCache
 }
 
 func regexpMatch(matchArgs map[string]interface{}) (map[string]cache.RespCache, string) {

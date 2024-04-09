@@ -1,11 +1,11 @@
 package framework
 
 import (
-	"appsploit/pkg/dto/finderprint/framework"
+	"appsploit/pkg/dto/fingerprint/framework"
 	"appsploit/pkg/dto/hash"
 )
 
-var spring = framework.Finderprint{
+var spring = framework.Fingerprint{
 	Basic: framework.MatchData{
 		Name: "Spring Framework",
 		HeaderRegexpMatch: []framework.RegexpMatch{
