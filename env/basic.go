@@ -43,12 +43,12 @@ func Framework(ctx *cli.Context) (result printer.Interface) {
 		Version: "unknown",
 	}
 	matchArgs := map[string]interface{}{
-		"baseURL":          utils.Http.FormatURL(ctx),
-		"respCacheMap":     make(map[string]cache.RespCache),
-		"regexpMatchList":  []dtoFramework.RegexpMatch{},
-		"hashMatchList":    []dtoFramework.HashMatch{},
-		"matchStructField": "",
-		"matchResult":      "",
+		"baseURL":         utils.Http.FormatURL(ctx),
+		"respCacheMap":    make(map[string]cache.RespCache),
+		"regexpMatchList": []dtoFramework.RegexpMatch{},
+		"hashMatchList":   []dtoFramework.HashMatch{},
+		"matchCache":      "",
+		"matchResult":     "",
 	}
 
 	for _, frameworkMatch := range framework.List {
@@ -71,22 +71,22 @@ func dataMatch(matchArgs map[string]interface{}, matchData dtoFramework.MatchDat
 	matchArgs["matchResult"] = matchData.Name
 	matchMap := []dtoFramework.MatchMap{
 		{
-			MatchList:        matchData.HeaderRegexpMatch,
-			MatchType:        datamatch.Regexp,
-			MatchStructField: "Header",
-			MatchFunc:        regexpMatch,
+			MatchList:  matchData.HeaderRegexpMatch,
+			MatchType:  datamatch.Regexp,
+			MatchCache: "Header",
+			MatchFunc:  regexpMatch,
 		},
 		{
-			MatchList:        matchData.BodyRegexpMatch,
-			MatchType:        datamatch.Regexp,
-			MatchStructField: "BodyString",
-			MatchFunc:        regexpMatch,
+			MatchList:  matchData.BodyRegexpMatch,
+			MatchType:  datamatch.Regexp,
+			MatchCache: "BodyString",
+			MatchFunc:  regexpMatch,
 		},
 		{
-			MatchList:        matchData.BodyHash,
-			MatchType:        datamatch.Hash,
-			MatchStructField: "BodyBytes",
-			MatchFunc:        hashMatch,
+			MatchList:  matchData.BodyHash,
+			MatchType:  datamatch.Hash,
+			MatchCache: "BodyBytes",
+			MatchFunc:  hashMatch,
 		},
 	}
 	for _, match := range matchMap {
@@ -96,7 +96,7 @@ func dataMatch(matchArgs map[string]interface{}, matchData dtoFramework.MatchDat
 		case datamatch.Hash:
 			matchArgs["hashMatchList"] = match.MatchList
 		}
-		matchArgs["matchStructField"] = match.MatchStructField
+		matchArgs["matchCache"] = match.MatchCache
 		matchArgs["respCacheMap"], result = match.MatchFunc(matchArgs)
 		if result != "unknown" {
 			break
@@ -132,12 +132,12 @@ func regexpMatch(matchArgs map[string]interface{}) (map[string]cache.RespCache, 
 	baseURL := matchArgs["baseURL"].(string)
 	respCacheMap := matchArgs["respCacheMap"].(map[string]cache.RespCache)
 	regexpMatchList := matchArgs["regexpMatchList"].([]dtoFramework.RegexpMatch)
-	matchStructField := matchArgs["matchStructField"].(string)
+	matchCache := matchArgs["matchCache"].(string)
 
 	for _, regexpData := range regexpMatchList {
 		respCache := cache.RespCache{}
 		respCacheMap, respCache = getRespCache(respCacheMap, baseURL, regexpData.Path)
-		if match, err := utils.Common.StringRegexpMatch(regexpData.Regexp, utils.Common.GetStructValue(respCache, matchStructField).(string)); err == nil {
+		if match, err := utils.Common.StringRegexpMatch(regexpData.Regexp, utils.Common.GetStructValue(respCache, matchCache).(string)); err == nil {
 			if match {
 				result = matchArgs["matchResult"].(string)
 				break
@@ -154,7 +154,7 @@ func hashMatch(matchArgs map[string]interface{}) (map[string]cache.RespCache, st
 	baseURL := matchArgs["baseURL"].(string)
 	respCacheMap := matchArgs["respCacheMap"].(map[string]cache.RespCache)
 	hashMatchList := matchArgs["hashMatchList"].([]dtoFramework.HashMatch)
-	matchStructField := matchArgs["matchStructField"].(string)
+	matchCache := matchArgs["matchCache"].(string)
 
 	for _, hashData := range hashMatchList {
 		respCache := cache.RespCache{}
@@ -165,7 +165,7 @@ func hashMatch(matchArgs map[string]interface{}) (map[string]cache.RespCache, st
 			}
 		}
 		if respCache.BodyHash[hashData.Type] == "" {
-			if hash, err := utils.Common.DataHash(hashData.Type, utils.Common.GetStructValue(respCache, matchStructField).([]byte)); err == nil {
+			if hash, err := utils.Common.DataHash(hashData.Type, utils.Common.GetStructValue(respCache, matchCache).([]byte)); err == nil {
 				respCache.BodyHash[hashData.Type] = hash
 				respCacheMap[hashData.Path] = respCache
 			} else {

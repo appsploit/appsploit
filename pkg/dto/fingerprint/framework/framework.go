@@ -26,8 +26,8 @@ type HashMatch struct {
 }
 
 type MatchMap struct {
-	MatchList        interface{}
-	MatchType        int
-	MatchStructField string
-	MatchFunc        func(matchArgs map[string]interface{}) (map[string]cache.RespCache, string)
+	MatchList  interface{}
+	MatchType  int
+	MatchCache string
+	MatchFunc  func(matchArgs map[string]interface{}) (map[string]cache.RespCache, string)
 }
