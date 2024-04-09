@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"github.com/ctrsploit/sploit-spec/pkg/printer"
 	"github.com/ctrsploit/sploit-spec/pkg/result/item"
+	"github.com/urfave/cli/v2"
 	"time"
 )
 
-func OS() (result printer.Interface) {
+func OS(ctx *cli.Context) (result printer.Interface) {
 	result = item.Short{
 		Name:        "os",
 		Description: "OS info",
@@ -16,11 +17,11 @@ func OS() (result printer.Interface) {
 	return result
 }
 
-func Component() (result printer.Interface) {
-	result = item.Short{
+func Component(ctx *cli.Context) (result printer.Interface) {
+	result = item.List{
 		Name:        "component",
 		Description: "component list",
-		Result:      fmt.Sprintf("%d", time.Now().Minute()),
+		Result:      []string{"result-test", "result-test"},
 	}
 	return result
 }

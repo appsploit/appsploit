@@ -14,7 +14,7 @@ var (
 		Name:    CommandNameAuto,
 		Usage:   "auto gathering information, detect vulnerabilities and run exploits",
 		Aliases: []string{"a"},
-		Action: func(context *cli.Context) (err error) {
+		Action: func(ctx *cli.Context) (err error) {
 			fmt.Println("TODO")
 			return
 		},

@@ -1,6 +1,8 @@
 package env
 
-import "github.com/urfave/cli/v2"
+import (
+	"github.com/urfave/cli/v2"
+)
 
 var Command = &cli.Command{
 	Name:    "env",

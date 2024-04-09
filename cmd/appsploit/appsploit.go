@@ -6,6 +6,7 @@ import (
 	"appsploit/cmd/appsploit/env"
 	"appsploit/cmd/appsploit/exploit"
 	"appsploit/cmd/appsploit/vul"
+	"fmt"
 	"github.com/ctrsploit/sploit-spec/pkg/app"
 	"github.com/ctrsploit/sploit-spec/pkg/version"
 	"github.com/urfave/cli/v2"
@@ -20,7 +21,7 @@ func init() {
 
 func main() {
 	sploit := &cli.App{
-		Name:  "xsploit",
+		Name:  "appsploit",
 		Usage: usage,
 		Commands: []*cli.Command{
 			auto.Command,
@@ -32,5 +33,8 @@ func main() {
 		},
 	}
 	app.InstallGlobalFlags(sploit)
-	_ = sploit.Run(os.Args)
+	err := sploit.Run(os.Args)
+	if err != nil {
+		fmt.Println(err)
+	}
 }

@@ -1,6 +1,7 @@
 package env
 
 import (
+	"appsploit/cmd/appsploit/flag"
 	"appsploit/env"
 	"github.com/urfave/cli/v2"
 )
@@ -13,8 +14,9 @@ var (
 	Auto = &cli.Command{
 		Name:  CommandNameAuto,
 		Usage: "auto",
-		Action: func(context *cli.Context) (err error) {
-			env.Auto()
+		Flags: flag.Flags,
+		Action: func(ctx *cli.Context) (err error) {
+			env.Auto(ctx)
 			return
 		},
 	}
