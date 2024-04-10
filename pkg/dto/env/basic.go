@@ -6,8 +6,8 @@ import (
 )
 
 type Basic struct {
-	WebServer `json:"webserver"`
-	Framework `json:"framework"`
+	WebServer WebServer `json:"webserver"`
+	Framework Framework `json:"framework"`
 }
 
 type WebServer struct {

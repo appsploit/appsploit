@@ -11,7 +11,7 @@ require (
 	github.com/urfave/cli/v2 v2.27.1
 )
 
-replace github.com/ctrsploit/sploit-spec => github.com/appsploit/sploit-spec v0.1.0
+replace github.com/ctrsploit/sploit-spec => github.com/appsploit/sploit-spec v0.1.1
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect

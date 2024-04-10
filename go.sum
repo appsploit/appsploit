@@ -1,5 +1,5 @@
-github.com/appsploit/sploit-spec v0.1.0 h1:BHGhTmrbBviq8e8DaoAHPzlcC8lR81Ym5N/6pdVebaM=
-github.com/appsploit/sploit-spec v0.1.0/go.mod h1:nvxWXMd2JeEQeByGziwm5obbRLJ66CJbqr9/2oo8VEg=
+github.com/appsploit/sploit-spec v0.1.1 h1:EC2Xh4HIm/8nWXfJWEgG9OE8aYlVJqPgQgwxQ02Gjpc=
+github.com/appsploit/sploit-spec v0.1.1/go.mod h1:nvxWXMd2JeEQeByGziwm5obbRLJ66CJbqr9/2oo8VEg=
 github.com/cpuguy83/go-md2man/v2 v2.0.4 h1:wfIWP927BUkWJb2NmU/kNDYIBTh/ziUX91+lVfRxZq4=
 github.com/cpuguy83/go-md2man/v2 v2.0.4/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
