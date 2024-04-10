@@ -1,25 +1,17 @@
----
-
-spec-version: v0.4.0
-
----
-
-# app-sploit: An example app follows sploit-spec
-
-Just an example, do not import code under example folder  
+# app-sploit
 
 ## Usage
 
 ```
-❯ ./appsploit_linux_amd64       
+❯ ./bin/release/appsploit_linux_amd64      
 NAME:
    appsploit - An example sploit tool follows sploit-spec
 
 USAGE:
-   appsploit [global options] command [command options] [arguments...]
+   appsploit [global options] command [command options] 
 
 COMMANDS:
-   auto         auto
+   auto, a      auto gathering information, detect vulnerabilities and run exploits
    env, e       Collect information
    checksec, c  check security inside a application
    exploit, x   run a exploit
@@ -28,11 +20,13 @@ COMMANDS:
    help, h      Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --debug         Output information for helping debugging sploit (default: false)
-   --experimental  enable experimental feature (default: false)
-   --colorful      output colorfully (default: false)
-   --json          output in json format (default: false)
-   --help, -h      show help
+   --proxy value    set proxy
+   --timeout value  set http timeout (default: 15)
+   --debug          Output information for helping debugging sploit (default: false)
+   --experimental   enable experimental feature (default: false)
+   --colorful       output colorfully (default: false)
+   --json           output in json format (default: false)
+   --help, -h       show help
 ```
 
 ### env: collect env information
@@ -43,20 +37,34 @@ NAME:
    appsploit env - Collect information
 
 USAGE:
-   appsploit env command [command options] [arguments...]
+   appsploit env command [command options] 
 
 COMMANDS:
-   auto       auto
-   second, s  show the second info
-   minute, m  show the minute info
-   help, h    Shows a list of commands or help for one command
+   auto          auto
+   webserver, w  show webserver info
+   framework, f  show framework info
+   os, o         show os info
+   component, c  show component list
+   help, h       Shows a list of commands or help for one command
 
 OPTIONS:
    --help, -h  show help
+
+--------------------------
    
 ❯ ./bin/release/appsploit_linux_amd64 env auto
-second:                 32      # second of current time
-minute:                 53      # second of current minute
+NAME:
+   appsploit env auto - auto
+
+USAGE:
+   appsploit env auto [command options] [arguments...]
+
+OPTIONS:
+   --target value, -t value  target host/ip
+   --port value, -p value    target port (default: 80)
+   --https, -s               use https (default: false)
+   --help, -h                show help
+
 ```
 
 ### checksec: check vulnerability exists
@@ -146,6 +154,6 @@ OPTIONS:
 ### machine friendly output
 
 ```
-❯ ./bin/release/appsploit_linux_amd64 --json env auto
-{"minute":{"name":"minute","description":"second of current minute","result":"55"},"second":{"name":"second","description":"second of current time","result":"19"}}
+❯ ./bin/release/appsploit_linux_amd64 --json env auto -t nginx.org -p 443 -s 
+{"component_list":{"name":"component","description":"component list","result_list":["result-test","result-test"]},"framework":{"name":"unknown","version":"unknown"},"os":{"name":"os","description":"OS info","result":"44"},"webserver":{"name":"nginx","version":"1.25.3"}}
 ```
