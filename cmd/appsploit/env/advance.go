@@ -1,7 +1,7 @@
 package env
 
 import (
-	"appsploit/cmd/appsploit/flag"
+	"appsploit/cmd/appsploit/flags"
 	"appsploit/env"
 	"fmt"
 	"github.com/ctrsploit/sploit-spec/pkg/printer"
@@ -12,7 +12,7 @@ var OS = &cli.Command{
 	Name:    "os",
 	Aliases: []string{"o"},
 	Usage:   "show os info",
-	Flags:   flag.Flags,
+	Flags:   flags.SubCmdFlags,
 	Action: func(ctx *cli.Context) (err error) {
 		result := env.OS(ctx)
 		fmt.Println(printer.Printer.Print(result))
@@ -24,7 +24,7 @@ var Component = &cli.Command{
 	Name:    "component",
 	Aliases: []string{"c"},
 	Usage:   "show component list",
-	Flags:   flag.Flags,
+	Flags:   flags.SubCmdFlags,
 	Action: func(ctx *cli.Context) (err error) {
 		result := env.Component(ctx)
 		fmt.Println(printer.Printer.Print(result))

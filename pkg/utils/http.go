@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"appsploit/internal/global"
 	"appsploit/pkg/dto/fingerprint/cache"
 	"crypto/tls"
 	"fmt"
@@ -12,45 +13,39 @@ import (
 	"time"
 )
 
-type utilsHttp struct {
-	httpOptions
-}
-
-type httpOptions struct {
-	UserAgent  string
-	CertVerify bool
-	Timeout    time.Duration
-	Proxy      string
-}
+type utilsHttp struct{}
 
 func (u *utilsHttp) Client() *resty.Request {
 	httpTransport := new(http.Transport)
-	if u.UserAgent == "" {
-		u.UserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
-	}
-	if !u.CertVerify {
+	if !global.HttpCertVerify {
 		httpTransport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	}
-	if u.Timeout <= 0 {
-		u.Timeout = 15
-	}
 	client := resty.New().
-		SetTimeout(u.Timeout*time.Second).
+		SetTimeout(time.Duration(global.HttpTimeout)*time.Second).
 		SetTransport(httpTransport).
-		SetHeader("User-Agent", u.UserAgent)
-	if u.Proxy != "" {
-		client = client.SetProxy(u.Proxy)
+		SetHeader("User-Agent", global.HttpUserAgent)
+	if global.HttpProxy != "" {
+		if !strings.Contains(global.HttpProxy, "://") {
+			global.HttpProxy = fmt.Sprintf("http://%s", global.HttpProxy)
+		}
+		client = client.SetProxy(global.HttpProxy)
 	}
 	return client.R()
 }
 
+func (u *utilsHttp) HttpCheck(url string) error {
+	httpClient := *u.Client()
+	_, err := httpClient.Head(url)
+	return err
+}
+
 func (u *utilsHttp) GetServerInfo(url string) (string, error) {
-	httpClient := *Http.Client()
-	resp, err := httpClient.Head(url)
-	if err != nil {
+	httpClient := *u.Client()
+	if resp, err := httpClient.Head(url); err != nil {
 		return "", err
+	} else {
+		return strings.ToLower(resp.Header().Get("Server")), error(nil)
 	}
-	return strings.ToLower(resp.Header().Get("Server")), error(nil)
 }
 
 func (u *utilsHttp) FormatURL(ctx *cli.Context) string {
@@ -62,19 +57,18 @@ func (u *utilsHttp) FormatURL(ctx *cli.Context) string {
 }
 
 func (u *utilsHttp) FormatURLPath(baseURL string, path string) (string, error) {
-	newURL, err := url.Parse(baseURL)
-	if err != nil {
+	if newURL, err := url.Parse(baseURL); err != nil {
 		return "", err
+	} else {
+		joinedURL := newURL.ResolveReference(&url.URL{Path: path})
+		return joinedURL.String(), error(nil)
 	}
-	joinedURL := newURL.ResolveReference(&url.URL{Path: path})
-	return joinedURL.String(), error(nil)
 }
 
 func (u *utilsHttp) Req2RespCache(url string) (cache.RespCache, error) {
 	respCache := cache.RespCache{}
-	httpClient := *Http.Client()
-	resp, err := httpClient.Get(url)
-	if err != nil {
+	httpClient := *u.Client()
+	if resp, err := httpClient.Get(url); err != nil {
 		return respCache, err
 	} else {
 		for key, value := range resp.Header() {

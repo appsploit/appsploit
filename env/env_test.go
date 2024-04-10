@@ -36,9 +36,9 @@ func TestFramework(t *testing.T) {
 				Name:  "target",
 				Value: "www.baidu.com",
 			},
-			&cli.StringFlag{
+			&cli.IntFlag{
 				Name:  "port",
-				Value: "443",
+				Value: 443,
 			},
 			&cli.BoolFlag{
 				Name:  "https",

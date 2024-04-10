@@ -21,6 +21,14 @@ func WebServer(ctx *cli.Context) (result printer.Interface) {
 	}
 	errorData := error(nil)
 	baseURL := utils.Http.FormatURL(ctx)
+
+	if err := utils.Http.HttpCheck(baseURL); err != nil {
+		log.Logger.Debugf("request error: %s\n", err)
+		webserverInfo.Name = "error"
+		webserverInfo.Version = "error"
+		return webserverInfo
+	}
+
 	if serverInfo, errorData = utils.Http.GetServerInfo(baseURL); errorData != nil {
 		log.Logger.Debugf("request error: %s\n", errorData)
 		webserverInfo.Name = "error"
@@ -42,8 +50,17 @@ func Framework(ctx *cli.Context) (result printer.Interface) {
 		Name:    "unknown",
 		Version: "unknown",
 	}
+	baseURL := utils.Http.FormatURL(ctx)
+
+	if err := utils.Http.HttpCheck(baseURL); err != nil {
+		log.Logger.Debugf("request error: %s\n", err)
+		frameworkInfo.Name = "error"
+		frameworkInfo.Version = "error"
+		return frameworkInfo
+	}
+
 	matchArgs := map[string]interface{}{
-		"baseURL":         utils.Http.FormatURL(ctx),
+		"baseURL":         baseURL,
 		"respCacheMap":    make(map[string]cache.RespCache),
 		"regexpMatchList": []dtoFramework.RegexpMatch{},
 		"hashMatchList":   []dtoFramework.HashMatch{},

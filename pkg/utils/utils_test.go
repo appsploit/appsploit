@@ -30,7 +30,7 @@ func TestUtilsHttp_GetServerInfo(t *testing.T) {
 }
 
 func TestUtilsHttp_Request2RespCache(t *testing.T) {
-	respCache, err := Http.Request2RespCache("https://www.baidu.com")
+	respCache, err := Http.Req2RespCache("https://www.baidu.com")
 	if err != nil {
 		t.Error(err)
 		return
@@ -38,6 +38,14 @@ func TestUtilsHttp_Request2RespCache(t *testing.T) {
 	t.Log(respCache.Header)
 	t.Log(respCache.BodyString)
 	t.Log(respCache.BodyBytes)
+}
+
+func TestUtilsHttp_HttpCheck(t *testing.T) {
+	if err := Http.HttpCheck("https://www.baidu.com:80"); err != nil {
+		t.Log(err)
+	} else {
+		t.Log("ok")
+	}
 }
 
 func TestUtilsDataHash_Hash(t *testing.T) {

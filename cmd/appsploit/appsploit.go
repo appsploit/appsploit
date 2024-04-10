@@ -5,6 +5,7 @@ import (
 	"appsploit/cmd/appsploit/checksec"
 	"appsploit/cmd/appsploit/env"
 	"appsploit/cmd/appsploit/exploit"
+	"appsploit/cmd/appsploit/flags"
 	"appsploit/cmd/appsploit/vul"
 	"fmt"
 	"github.com/ctrsploit/sploit-spec/pkg/app"
@@ -23,6 +24,7 @@ func main() {
 	sploit := &cli.App{
 		Name:  "appsploit",
 		Usage: usage,
+		Flags: flags.AppCmdFlags,
 		Commands: []*cli.Command{
 			auto.Command,
 			env.Command,
