@@ -8,7 +8,7 @@ import (
 
 type Result map[string]printer.Interface
 
-func Auto(ctx *cli.Context) {
+func Auto(ctx *cli.Context) (env map[string]printer.Interface) {
 	result := Result{
 		"webserver":      WebServer(ctx),
 		"framework":      Framework(ctx),
@@ -16,4 +16,5 @@ func Auto(ctx *cli.Context) {
 		"component_list": Component(ctx),
 	}
 	fmt.Println(printer.Printer.Print(result))
+	return result
 }

@@ -17,7 +17,7 @@ var (
 		Aliases: []string{"a"},
 		Action: func(ctx *cli.Context) (err error) {
 			vulnerabilities := vul.Vulnerabilities{
-				vul2.CVE_2099_9999_v1,
+				vul2.CVE_2024_23334_v1,
 			}
 			err = vulnerabilities.Check()
 			if err != nil {

@@ -6,6 +6,7 @@ import (
 	"appsploit/cmd/appsploit/env"
 	"appsploit/cmd/appsploit/exploit"
 	"appsploit/cmd/appsploit/flags"
+	"appsploit/cmd/appsploit/upload"
 	"appsploit/cmd/appsploit/vul"
 	"fmt"
 	"github.com/ctrsploit/sploit-spec/pkg/app"
@@ -28,6 +29,7 @@ func main() {
 		Commands: []*cli.Command{
 			auto.Command,
 			env.Command,
+			upload.Command,
 			checksec.Command,
 			exploit.Command,
 			vul.Command,

@@ -10,14 +10,12 @@ const (
 	CommandNameAuto = "auto"
 )
 
-var (
-	Auto = &cli.Command{
-		Name:  CommandNameAuto,
-		Usage: "auto",
-		Flags: flags.SubCmdFlags,
-		Action: func(ctx *cli.Context) (err error) {
-			env.Auto(ctx)
-			return
-		},
-	}
-)
+var Auto = &cli.Command{
+	Name:  CommandNameAuto,
+	Usage: "auto",
+	Flags: flags.SubCmdFlags,
+	Action: func(ctx *cli.Context) (err error) {
+		env.Auto(ctx)
+		return
+	},
+}
