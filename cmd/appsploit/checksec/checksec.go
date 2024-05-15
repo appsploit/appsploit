@@ -1,8 +1,8 @@
 package checksec
 
 import (
+	appVul "appsploit/pkg/vul"
 	"appsploit/vul"
-	"github.com/ctrsploit/sploit-spec/pkg/app"
 	"github.com/urfave/cli/v2"
 )
 
@@ -12,6 +12,6 @@ var Command = &cli.Command{
 	Usage:   "check security inside a application",
 	Subcommands: []*cli.Command{
 		Auto,
-		app.Vul2ChecksecCmd(vul.CVE_2099_9999_v1, []string{"2099"}),
+		appVul.CmdChecksec(vul.CVE_2024_23334_v1, []string{"2024-23334"}),
 	},
 }
