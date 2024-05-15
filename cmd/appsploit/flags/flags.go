@@ -46,8 +46,8 @@ var SubCmdFlags = []cli.Flag{
 		},
 	},
 	&cli.BoolFlag{
-		Name:    "https",
-		Usage:   "use https",
+		Name:    "tls",
+		Usage:   "use https/tls",
 		Aliases: []string{"s"},
 		Value:   false,
 	},

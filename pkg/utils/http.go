@@ -50,7 +50,7 @@ func (u *utilsHttp) GetServerInfo(url string) (string, error) {
 
 func (u *utilsHttp) FormatURL(ctx *cli.Context) string {
 	proto := "http"
-	if ctx.Bool("https") {
+	if ctx.Bool("tls") {
 		proto = "https"
 	}
 	return fmt.Sprintf("%s://%s:%d", proto, ctx.String("target"), ctx.Int("port"))
@@ -65,6 +65,20 @@ func (u *utilsHttp) FormatURLPath(baseURL string, path string) (string, error) {
 	}
 }
 
+func (u *utilsHttp) Get(url string) (string, error) {
+	response := ""
+	httpClient := *u.Client()
+	if resp, err := httpClient.Get(url); err != nil {
+		return response, err
+	} else {
+		for key, value := range resp.Header() {
+			response += fmt.Sprintf("%s: %s\n", key, strings.Join(value, "|"))
+		}
+		response += "\n" + resp.String()
+	}
+	return response, error(nil)
+}
+
 func (u *utilsHttp) Req2RespCache(url string) (cache.RespCache, error) {
 	respCache := cache.RespCache{}
 	httpClient := *u.Client()
@@ -75,7 +89,7 @@ func (u *utilsHttp) Req2RespCache(url string) (cache.RespCache, error) {
 			respCache.Header += fmt.Sprintf("%s: %s\n", key, strings.Join(value, "|"))
 		}
 		respCache.BodyBytes = resp.Body()
-		respCache.BodyString = string(resp.Body())
+		respCache.BodyString = resp.String()
 	}
 	return respCache, error(nil)
 }

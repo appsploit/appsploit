@@ -2,6 +2,7 @@ package utils
 
 import (
 	"appsploit/pkg/dto/hash"
+	"fmt"
 	"strings"
 	"testing"
 )
@@ -54,4 +55,13 @@ func TestUtilsDataHash_Hash(t *testing.T) {
 		t.Error(err)
 	}
 	t.Log(hashResult)
+}
+
+func TestUtilsHttp_Get(t *testing.T) {
+	resp, err := Http.Get("https://www.baidu.com")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	fmt.Print(resp)
 }

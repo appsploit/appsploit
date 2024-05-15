@@ -1,8 +1,9 @@
 package checksec
 
 import (
-	vul2 "appsploit/vul"
-	"github.com/ctrsploit/sploit-spec/pkg/vul"
+	appVul "appsploit/pkg/vul"
+	"appsploit/vul"
+
 	"github.com/urfave/cli/v2"
 )
 
@@ -16,10 +17,10 @@ var (
 		Usage:   "auto",
 		Aliases: []string{"a"},
 		Action: func(ctx *cli.Context) (err error) {
-			vulnerabilities := vul.Vulnerabilities{
-				vul2.CVE_2024_23334_v1,
+			vulnerabilities := appVul.Vulnerabilities{
+				vul.CVE_2024_23334_v1,
 			}
-			err = vulnerabilities.Check()
+			err = vulnerabilities.Check(ctx)
 			if err != nil {
 				return
 			}
