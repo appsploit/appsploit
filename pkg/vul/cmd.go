@@ -13,6 +13,7 @@ func CmdChecksec(v Vulnerability, alias []string) *cli.Command {
 		Flags:   flags.SubCmdFlags,
 		Action: func(ctx *cli.Context) (err error) {
 			_, err = v.CheckSec(ctx)
+			v.GetVulnerabilityExists()
 			if err != nil {
 				return
 			}

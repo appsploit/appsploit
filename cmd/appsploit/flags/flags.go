@@ -51,4 +51,9 @@ var SubCmdFlags = []cli.Flag{
 		Aliases: []string{"s"},
 		Value:   false,
 	},
+	&cli.StringFlag{
+		Name:    "args",
+		Usage:   "other arguments",
+		Aliases: []string{"a"},
+	},
 }

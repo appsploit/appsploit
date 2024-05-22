@@ -53,7 +53,7 @@ func (v *BaseVulnerability) Info() {
 	log.Logger.Info(v.Description)
 }
 
-func (v *BaseVulnerability) CheckSec(*cli.Context) (vulnerabilityExists bool, err error) {
+func (v *BaseVulnerability) CheckSec(ctx *cli.Context) (vulnerabilityExists bool, err error) {
 	vulnerabilityExists, err = v.CheckSecPrerequisites.Satisfied()
 	if err != nil {
 		return
@@ -85,7 +85,7 @@ func (v *BaseVulnerability) Exploitable() (satisfied bool, err error) {
 	return
 }
 
-func (v *BaseVulnerability) Exploit(*cli.Context) (err error) {
+func (v *BaseVulnerability) Exploit(ctx *cli.Context) (err error) {
 	exploitable, err := v.Exploitable()
 	if err != nil {
 		return

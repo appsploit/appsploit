@@ -11,6 +11,6 @@ var Command = &cli.Command{
 	Aliases: []string{"v"},
 	Usage:   "list vulnerabilities",
 	Subcommands: []*cli.Command{
-		appVul.CmdVul(vul.CVE_2024_23334_v1, []string{"2024-23334"}),
+		appVul.CmdVul(&vul.CVE_2024_23334_v1, []string{"2024-23334"}),
 	},
 }

