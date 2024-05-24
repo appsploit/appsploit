@@ -52,8 +52,13 @@ var SubCmdFlags = []cli.Flag{
 		Value:   false,
 	},
 	&cli.StringFlag{
-		Name:    "args",
-		Usage:   "other arguments",
-		Aliases: []string{"a"},
+		Name:    "file",
+		Usage:   "read filename",
+		Aliases: []string{"f"},
+	},
+	&cli.StringFlag{
+		Name:    "command",
+		Usage:   "execute command",
+		Aliases: []string{"c"},
 	},
 }

@@ -30,11 +30,12 @@ func CmdExploit(v Vulnerability, alias []string) *cli.Command {
 		Usage:   v.GetDescription(),
 		Flags:   flags.SubCmdFlags,
 		Action: func(ctx *cli.Context) (err error) {
-			_, err = v.CheckSec(ctx)
+			_, err = v.Exploit(ctx)
+			v.GetVulnerabilityExists()
 			if err != nil {
 				return
 			}
-			err = v.Exploit(ctx)
+			v.Output()
 			return
 		},
 	}
