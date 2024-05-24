@@ -36,6 +36,9 @@ func WebServer(ctx *cli.Context) (result printer.Interface) {
 	}
 	if serverInfo != "" {
 		if strings.Contains(serverInfo, "/") {
+			if strings.Contains(serverInfo, " ") {
+				serverInfo = strings.Split(serverInfo, " ")[0]
+			}
 			webserverInfo.Name = strings.Split(serverInfo, "/")[0]
 			webserverInfo.Version = strings.Split(serverInfo, "/")[1]
 		} else {

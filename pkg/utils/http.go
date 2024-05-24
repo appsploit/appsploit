@@ -44,7 +44,7 @@ func (u *utilsHttp) GetServerInfo(url string) (string, error) {
 	if resp, err := httpClient.Head(url); err != nil {
 		return "", err
 	} else {
-		return strings.ToLower(resp.Header().Get("Server")), error(nil)
+		return strings.ToLower(strings.TrimSpace(resp.Header().Get("Server"))), error(nil)
 	}
 }
 

@@ -7,6 +7,7 @@ import (
 var (
 	List = []framework.Fingerprint{
 		spring,
+		aiohttp,
 		testtest,
 	}
 )
