@@ -57,6 +57,11 @@ var SubCmdFlags = []cli.Flag{
 		Aliases: []string{"f"},
 	},
 	&cli.StringFlag{
+		Name:    "path",
+		Usage:   "url path",
+		Aliases: []string{"P"},
+	},
+	&cli.StringFlag{
 		Name:    "command",
 		Usage:   "execute command",
 		Aliases: []string{"c"},

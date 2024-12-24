@@ -13,6 +13,7 @@ import (
 	"reflect"
 	"regexp"
 	"sort"
+	"strings"
 )
 
 type utilsCommon struct{}
@@ -81,4 +82,12 @@ func (u *utilsCommon) DataHash(hashType int, data []byte) (string, error) {
 		errorData = fmt.Errorf("hash type not support")
 	}
 	return hashResult, errorData
+}
+
+func (u *utilsCommon) EncodeToUnicode(input string) string {
+	var sb strings.Builder
+	for _, r := range input {
+		sb.WriteString(fmt.Sprintf("\\u%04x", r))
+	}
+	return sb.String()
 }
