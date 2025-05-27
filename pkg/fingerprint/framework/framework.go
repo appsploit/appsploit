@@ -8,6 +8,8 @@ var (
 	List = []framework.Fingerprint{
 		spring,
 		aiohttp,
+		axios,
+		kibana,
 		testtest,
 	}
 )
