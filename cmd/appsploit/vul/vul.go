@@ -1,8 +1,8 @@
 package vul
 
 import (
-	appVul "appsploit/pkg/vul"
-	"appsploit/vul"
+	"appsploit/vul/cve-2024-23334"
+
 	"github.com/urfave/cli/v2"
 )
 
@@ -11,6 +11,6 @@ var Command = &cli.Command{
 	Aliases: []string{"v"},
 	Usage:   "list vulnerabilities",
 	Subcommands: []*cli.Command{
-		appVul.CmdVul(&vul.CVE_2024_23334_v1, []string{"2024-23334"}),
+		cve_2024_23334.VulCmd,
 	},
 }
