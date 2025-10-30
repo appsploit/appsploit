@@ -4,6 +4,7 @@ import (
 	"appsploit/cmd/appsploit/flags"
 	"appsploit/env"
 	"fmt"
+
 	"github.com/ctrsploit/sploit-spec/pkg/printer"
 	"github.com/urfave/cli/v2"
 )

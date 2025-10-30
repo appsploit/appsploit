@@ -14,6 +14,8 @@ import (
 	"regexp"
 	"sort"
 	"strings"
+
+	"github.com/urfave/cli/v2"
 )
 
 type utilsCommon struct{}
@@ -90,4 +92,46 @@ func (u *utilsCommon) EncodeToUnicode(input string) string {
 		sb.WriteString(fmt.Sprintf("\\u%04x", r))
 	}
 	return sb.String()
+}
+
+// ParseCustomData 解析 custom-data 参数
+// 格式：key1=value1,key2=value2
+// 返回：map[string]string
+func (u *utilsCommon) ParseCustomData(ctx *cli.Context) map[string]string {
+	result := make(map[string]string)
+	customData := ctx.String("custom-data")
+
+	if customData == "" {
+		return result
+	}
+
+	// 按逗号分割
+	pairs := strings.Split(customData, ",")
+	for _, pair := range pairs {
+		pair = strings.TrimSpace(pair)
+		if pair == "" {
+			continue
+		}
+
+		// 按等号分割
+		parts := strings.SplitN(pair, "=", 2)
+		if len(parts) == 2 {
+			key := strings.TrimSpace(parts[0])
+			value := strings.TrimSpace(parts[1])
+			if key != "" {
+				result[key] = value
+			}
+		}
+	}
+
+	return result
+}
+
+// GetCustomValue 获取指定 key 的值，如果不存在则返回默认值
+func (u *utilsCommon) GetCustomValue(ctx *cli.Context, key string, defaultValue string) string {
+	data := u.ParseCustomData(ctx)
+	if value, exists := data[key]; exists {
+		return value
+	}
+	return defaultValue
 }

@@ -49,11 +49,27 @@ func (u *utilsHttp) GetServerInfo(url string) (string, error) {
 }
 
 func (u *utilsHttp) FormatURL(ctx *cli.Context) string {
+	// 优先使用url参数
+	if urlStr := ctx.String("url"); urlStr != "" {
+		// 如果url不包含协议，添加http://
+		if !strings.HasPrefix(urlStr, "http://") && !strings.HasPrefix(urlStr, "https://") {
+			urlStr = "http://" + urlStr
+		}
+		// 移除末尾的斜杠
+		return strings.TrimRight(urlStr, "/")
+	}
+
+	// 回退到target/port/tls参数（用于非HTTP漏洞）
+	target := ctx.String("target")
+	if target == "" {
+		return ""
+	}
+
 	proto := "http"
 	if ctx.Bool("tls") {
 		proto = "https"
 	}
-	return fmt.Sprintf("%s://%s:%d", proto, ctx.String("target"), ctx.Int("port"))
+	return fmt.Sprintf("%s://%s:%d", proto, target, ctx.Int("port"))
 }
 
 func (u *utilsHttp) FormatURLPath(baseURL string, path string) (string, error) {

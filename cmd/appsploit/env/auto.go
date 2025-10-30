@@ -3,6 +3,7 @@ package env
 import (
 	"appsploit/cmd/appsploit/flags"
 	"appsploit/env"
+
 	"github.com/urfave/cli/v2"
 )
 

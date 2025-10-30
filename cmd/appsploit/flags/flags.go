@@ -28,18 +28,22 @@ var AppCmdFlags = []cli.Flag{
 
 var SubCmdFlags = []cli.Flag{
 	&cli.StringFlag{
-		Name:     "target",
-		Usage:    "target host/ip",
-		Aliases:  []string{"t"},
-		Required: true,
+		Name:    "url",
+		Usage:   "target url (e.g., http://example.com:8080)",
+		Aliases: []string{"u"},
+	},
+	&cli.StringFlag{
+		Name:    "target",
+		Usage:   "target host/ip (for non-HTTP exploits)",
+		Aliases: []string{"t"},
 	},
 	&cli.IntFlag{
 		Name:    "port",
-		Usage:   "target port",
+		Usage:   "target port (for non-HTTP exploits)",
 		Aliases: []string{"p"},
 		Value:   80,
 		Action: func(context *cli.Context, i int) error {
-			if i <= 0 && i > 65535 {
+			if i <= 0 || i > 65535 {
 				return fmt.Errorf("target port value %v out of range[1-65535]", i)
 			}
 			return nil
@@ -47,7 +51,7 @@ var SubCmdFlags = []cli.Flag{
 	},
 	&cli.BoolFlag{
 		Name:    "tls",
-		Usage:   "use https/tls",
+		Usage:   "use https/tls (for non-HTTP exploits)",
 		Aliases: []string{"s"},
 		Value:   false,
 	},
@@ -65,5 +69,10 @@ var SubCmdFlags = []cli.Flag{
 		Name:    "command",
 		Usage:   "execute command",
 		Aliases: []string{"c"},
+	},
+	&cli.StringFlag{
+		Name:    "custom-data",
+		Usage:   "custom data in key=value format, multiple values separated by comma (e.g., broker=kafka:9092,timeout=30)",
+		Aliases: []string{"cd"},
 	},
 }

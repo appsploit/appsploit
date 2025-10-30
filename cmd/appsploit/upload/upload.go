@@ -2,10 +2,11 @@ package upload
 
 import (
 	"fmt"
-	"github.com/ctrsploit/sploit-spec/pkg/upload"
-	"github.com/urfave/cli/v2"
 	"os"
 	"path/filepath"
+
+	"github.com/ctrsploit/sploit-spec/pkg/upload"
+	"github.com/urfave/cli/v2"
 )
 
 var Command = &cli.Command{
