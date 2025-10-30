@@ -21,7 +21,7 @@ var (
 )
 
 func (p *Time) Check() (err error) {
-	err = p.BasePrerequisite.Check()
+	_, err = p.BasePrerequisite.Check()
 	if err != nil {
 		return
 	}

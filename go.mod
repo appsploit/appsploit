@@ -3,15 +3,13 @@ module appsploit
 go 1.24.2
 
 require (
-	github.com/ctrsploit/sploit-spec v0.6.0
+	github.com/ctrsploit/sploit-spec v0.6.1
 	github.com/go-resty/resty/v2 v2.16.5
 	github.com/json-iterator/go v1.1.12
 	github.com/ssst0n3/awesome_libs v0.6.7
 	github.com/stretchr/testify v1.11.1
 	github.com/urfave/cli/v2 v2.27.7
 )
-
-replace github.com/ctrsploit/sploit-spec => github.com/appsploit/sploit-spec v0.2.4
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.7 // indirect
