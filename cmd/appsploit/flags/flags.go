@@ -75,4 +75,9 @@ var SubCmdFlags = []cli.Flag{
 		Usage:   "custom data in key=value format, multiple values separated by comma (e.g., broker=kafka:9092,timeout=30)",
 		Aliases: []string{"cd"},
 	},
+	&cli.StringFlag{
+		Name:    "template",
+		Usage:   "use external nuclei template file",
+		Aliases: []string{"T"},
+	},
 }
